@@ -1,0 +1,1220 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  ChevronDown, ChevronUp, Book, Brain, Feather, Lightbulb, Zap, MessageCircle, Heart,
+  Target, Sparkles, PenTool, Globe, TrendingUp, HandHelping, Users, ScrollText, Play,
+  Pause, SpeakerSimpleHigh, SpeakerSimpleMute, Home, X, Menu, Key, ClipboardText, Layers, Sliders // Importando todos os ícones necessários aqui
+} from 'lucide-react';
+
+// Certifique-se de que o Tailwind CSS esteja configurado no ambiente de execução.
+
+const App = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Adiciona a fonte Inter globalmente
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    document.body.style.fontFamily = 'Inter, sans-serif';
+  }, []);
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(id);
+      setIsMenuOpen(false); // Fecha o menu após clicar
+    }
+  };
+
+  const menuItems = [
+    { id: 'home', name: 'Início', icon: <Home size={18} /> },
+    { id: 'teoria', name: 'Teoria', icon: <Book size={18} /> },
+    { id: 'pch', name: 'PCH', icon: <Brain size={18} /> },
+    { id: 'reestruturacao', name: 'Exemplo de Reestruturação', icon: <MessageCircle size={18} /> },
+    { id: 'exercicios', name: 'Exercícios Essenciais', icon: <PenTool size={18} /> },
+    { id: 'agente-transformacao', name: 'Agente de Transformação', icon: <Zap size={18} /> },
+    { id: 'avancados', name: 'Exercícios Avançados', icon: <ScrollText size={18} /> },
+    { id: 'manifesto', name: 'Manifesto', icon: <Layers size={18} /> },
+    { id: 'conclusao', name: 'Conclusão', icon: <Lightbulb size={18} /> },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 text-gray-800">
+      <header className="sticky top-0 z-50 bg-white shadow-md rounded-b-xl px-4 py-3 md:py-4 flex justify-between items-center w-full max-w-7xl mx-auto">
+        <h1 className="text-2xl md:text-3xl font-bold text-indigo-700">Poesia Hipnótica</h1>
+        <nav className="hidden md:flex space-x-6">
+          {menuItems.map(item => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300
+                ${activeSection === item.id ? 'bg-indigo-100 text-indigo-700 font-semibold shadow-inner' : 'text-gray-600 hover:text-indigo-700 hover:bg-indigo-50'}`}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </button>
+          ))}
+        </nav>
+        <div className="md:hidden">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md">
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </header>
+
+      {isMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-white bg-opacity-95 z-40 flex flex-col items-center justify-center space-y-6 animate-fade-in-down">
+          {menuItems.map(item => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`flex items-center space-x-3 text-xl px-6 py-3 rounded-lg transition-all duration-300
+                ${activeSection === item.id ? 'bg-indigo-100 text-indigo-700 font-semibold shadow-inner' : 'text-gray-700 hover:text-indigo-800 hover:bg-indigo-50'}`}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </button>
+          ))}
+          <button onClick={() => setIsMenuOpen(false)} className="mt-8 text-gray-600 hover:text-red-500">
+            <X size={30} />
+          </button>
+        </div>
+      )}
+
+      <main className="container mx-auto px-4 py-8 md:py-12">
+        {/* Seção de Introdução */}
+        <Section id="home" title="Poesia Hipnótica: O Poder das Palavras" icon={<Sparkles size={30} />}>
+          <p className="text-lg mb-4 leading-relaxed">
+            A palavra tem um impacto profundo na psique humana, sendo a principal ferramenta da terapia. Quando usada com propósito e poesia, ela pode reestruturar pensamentos e emoções, proporcionando novas percepções e caminhos para a transformação interior.
+          </p>
+          <p className="text-lg leading-relaxed">
+            A palavra bem utilizada influencia emoções, crenças e até reconfigura padrões mentais. Seja na hipnoterapia, na PNL, na psicologia ou na meditação guiada, a forma como nos expressamos pode gerar profundas mudanças internas.
+          </p>
+          <div className="bg-indigo-50 p-6 rounded-xl shadow-inner mt-8">
+            <p className="italic text-indigo-700 text-xl font-medium">
+              “Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades.” 🌱
+            </p>
+          </div>
+        </Section>
+
+        {/* Seção Base Teórica */}
+        <Section id="teoria" title="Base Teórica: O Poder das Palavras na Transformação Psicológica" icon={<Book size={30} />}>
+          <h3 className="text-2xl font-semibold text-indigo-600 mb-4">Áreas terapêuticas relacionadas:</h3>
+          <ul className="space-y-4 text-lg">
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-3 text-2xl">🌀</span>
+              <div>
+                <strong className="font-semibold">Hipnose e PNL:</strong> Utilizam sugestões verbais para reprogramar padrões inconscientes e estimular mudanças positivas.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-3 text-2xl">🧠</span>
+              <div>
+                <strong className="font-semibold">Psicoterapia:</strong> A palavra auxilia no autoconhecimento, na ressignificação e na cura emocional.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-3 text-2xl">🧘‍♂️</span>
+              <div>
+                <strong className="font-semibold">Mindfulness e Meditação:</strong> Afirmações e mantras promovem equilíbrio emocional e conexão interior.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-3 text-2xl">📖</span>
+              <div>
+                <strong className="font-semibold">Terapia Narrativa:</strong> Reescrever histórias pessoais transforma a forma de viver a própria trajetória.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-3 text-2xl">✍️</span>
+              <div>
+                <strong className="font-semibold">Escrita Terapêutica:</strong> Escrever pensamentos e emoções auxilia no processamento emocional e na redução do estresse.
+              </div>
+            </li>
+          </ul>
+        </Section>
+
+        {/* Seção Poesia Cognitiva Hipnótica (PCH) */}
+        <Section id="pch" title="Poesia Cognitiva Hipnótica (PCH)" icon={<Brain size={30} />}>
+          <p className="text-lg mb-4 leading-relaxed">
+            A PCH é uma ferramenta poderosa para ressignificar crenças e estimular mudanças emocionais positivas. Com base na Terapia Cognitivo-Comportamental (TCC), combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes.
+          </p>
+          <h3 className="text-2xl font-semibold text-indigo-600 mb-4">💡 Como aplicar a PCH para transformar crenças?</h3>
+          <ol className="list-decimal list-inside space-y-4 text-lg">
+            <li>
+              <strong className="font-semibold">Identificação da Crença Limitante:</strong>
+              <p className="ml-4 italic text-gray-600">Exemplo: "Eu não sou capaz o suficiente."</p>
+            </li>
+            <li>
+              <strong className="font-semibold">Nova Narrativa Expansiva:</strong>
+              <p className="ml-4 leading-relaxed bg-indigo-50 p-3 rounded-lg mt-2">
+                "Assim como o sol nasce todos os dias sem esforço, minha força se renova a cada novo amanhecer. Mesmo que nuvens o cubram por instantes, sua luz continua brilhando além delas. E, assim como o sol, minha essência é constante, minha capacidade é real, e cada novo dia é uma oportunidade para brilhar ainda mais."
+              </p>
+            </li>
+            <li>
+              <strong className="font-semibold">Estruturação em Poema Hipnótico:</strong>
+              <Poem text={`"Por tanto tempo duvidei de mim,
+Como se o vento pudesse parar o mar.
+Mas agora percebo...
+Cada desafio que enfrento é uma onda...
+E eu aprendi a surfar."`} />
+            </li>
+          </ol>
+          <p className="text-lg mt-6 leading-relaxed">
+            Esse método permite que a mente absorva novas possibilidades de forma natural e envolvente, fortalecendo pensamentos positivos e reequilibrando emoções.
+          </p>
+        </Section>
+
+        {/* Exemplo Prático de Reestruturação */}
+        <Section id="reestruturacao" title="Exemplo Prático de Reestruturação" icon={<MessageCircle size={30} />}>
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1 bg-red-50 p-6 rounded-xl shadow-md">
+              <h3 className="text-xl font-semibold text-red-700 mb-3">Antes:</h3>
+              <p className="text-lg italic leading-relaxed">"Eu não sou bom o suficiente, sempre me comparo aos outros."</p>
+            </div>
+            <div className="flex-1 bg-green-50 p-6 rounded-xl shadow-md">
+              <h3 className="text-xl font-semibold text-green-700 mb-3">Depois:</h3>
+              <p className="text-lg italic leading-relaxed">"Meu valor não depende da comparação, mas do meu próprio crescimento."</p>
+            </div>
+          </div>
+          <h3 className="text-2xl font-semibold text-indigo-600 mt-8 mb-4">Poema Terapêutico – "O Caminho é Meu"</h3>
+          <Poem text={`Por tanto tempo, olhei para o lado,
+buscando no outro o que já era meu.
+Mas agora percebo, com olhos despertos,
+que sempre fui eu… sempre fui eu.
+
+Cada passo, um traço da minha história,
+sem pressa, sem medo de ser.
+Não há destino, não há comparações,
+apenas a jornada… apenas viver.
+
+Sou rio que aprende o próprio curso,
+vento que dança sem se prender.
+Não preciso ser melhor que ninguém,
+apenas melhor do que fui ao nascer.
+
+E assim caminho, leve e inteiro,
+sabendo que sou e sempre serei.
+Minha verdade, minha essência,
+meu próprio rumo, que hoje encontrei.`} isPlayable={true} />
+        </Section>
+
+        {/* Exercícios de Poesia Cognitiva Hipnótica */}
+        <Section id="exercicios" title="Exercícios de Poesia Cognitiva Hipnótica" icon={<PenTool size={30} />}>
+          <CollapsibleSection title="Exercício 1: Identificação e Ressignificação da Crença Limitante" icon={<Target size={20} />}>
+            <p className="mb-4 text-lg">🎯 Objetivo: Tornar consciente uma crença negativa e iniciar o processo de mudança.</p>
+            <h4 className="font-semibold text-lg mb-2">Passo 1: Identifique sua crença limitante</h4>
+            <p className="mb-2 italic text-gray-600">Exemplos: "Eu não sou bom o suficiente." "As pessoas sempre me abandonam."</p>
+            <label htmlFor="crencaLimitante" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              Minha crença limitante é:
+            </label>
+            <textarea
+              id="crencaLimitante"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Eu não sou bom o suficiente."
+            ></textarea>
+            <label htmlFor="surgiuQuando" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              Ela surgiu quando:
+            </label>
+            <textarea
+              id="surgiuQuando"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Era na infância, quando me disseram que eu não era capaz."
+            ></textarea>
+            <label htmlFor="meFazAcreditar" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              E me faz acreditar que:
+            </label>
+            <textarea
+              id="meFazAcreditar"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Não mereço coisas boas."
+            ></textarea>
+
+            <h4 className="font-semibold text-lg mb-2 mt-8">Passo 2: Impacto na sua vida</h4>
+            <label htmlFor="sintoQuandoSurge" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              Quando essa crença surge, eu sinto:
+            </label>
+            <textarea
+              id="sintoQuandoSurge"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Desânimo e tristeza."
+            ></textarea>
+            <label htmlFor="acaboFazendo" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              E acabo fazendo:
+            </label>
+            <textarea
+              id="acaboFazendo"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Evito novos desafios."
+            ></textarea>
+            <label htmlFor="impedeDe" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              Isso me impede de:
+            </label>
+            <textarea
+              id="impedeDe"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Alcançar meu potencial pleno."
+            ></textarea>
+
+            <h4 className="font-semibold text-lg mb-2 mt-8">Passo 3: Desafiando a crença</h4>
+            <label htmlFor="nao100Verdadeira" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              Essa crença não é 100% verdadeira porque:
+            </label>
+            <textarea
+              id="nao100Verdadeira"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Já tive sucessos que provam o contrário."
+            ></textarea>
+
+            <h4 className="font-semibold text-lg mb-2 mt-8">Passo 4: Transformação</h4>
+            <label htmlFor="escolhoAcreditar" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              A partir de agora, escolho acreditar que:
+            </label>
+            <textarea
+              id="escolhoAcreditar"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[80px]"
+              placeholder="Ex: Sou capaz e mereço o sucesso."
+            ></textarea>
+
+            <h4 className="font-semibold text-lg mb-2 mt-8">Passo 5: Poema Terapêutico</h4>
+            <p className="mb-2 italic text-gray-600">Exemplo: "Eu pensava que o erro era o fim, Mas agora vejo que ele é caminho. A cada tropeço, um novo aprendizado, E sigo adiante, mais forte, inspirado."</p>
+            <label htmlFor="meuPoemaTerapeutico" className="block text-lg font-medium text-gray-700 mb-2 mt-4">
+              Crie o seu poema:
+            </label>
+            <textarea
+              id="meuPoemaTerapeutico"
+              className="w-full p-3 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-y min-h-[120px]"
+              placeholder="(Use metáforas, emoção e visualizações transformadoras.)"
+            ></textarea>
+
+            <h4 className="font-semibold text-lg mb-2 mt-8">Passo 6: Âncora de Reforço</h4>
+            <ul className="list-disc list-inside text-lg">
+              <li>✅ Escreva a nova crença e o poema em um post-it.</li>
+              <li>✅ Grave um áudio lendo com emoção e ouça todos os dias.</li>
+              <li>✅ Crie um gesto ou objeto que simbolize sua nova crença.</li>
+            </ul>
+            <p className="mt-4 text-lg">Conclusão: Este exercício promove uma reprogramação emocional profunda, usando escrita terapêutica e elementos da Poesia Cognitiva Hipnótica para transformar crenças limitantes em fortalezas internas.</p>
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Hipnose Conversacional e Poesia Cognitiva Hipnótica" icon={<Globe size={20} />}>
+            <p className="text-lg mb-4 leading-relaxed">
+              A hipnose conversacional é uma abordagem sutil e eficaz para acessar estados profundos da mente sem a necessidade de um transe formal. Ao usar padrões de linguagem sugestivos, metáforas e estrutura narrativa, é possível influenciar a percepção e facilitar mudanças positivas.
+            </p>
+            <p className="text-lg mb-4 leading-relaxed">
+              No contexto da Poesia Cognitiva Hipnótica (PCH), a hipnose conversacional é aplicada através de frases cuidadosamente construídas, estimulando associações mentais e emocionais que promovem novas formas de pensar e sentir.
+            </p>
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3">Poesia Cognitiva Hipnótica (PCH)</h4>
+            <PoemCard title="Durma Profundamente" text={`Talvez agora… bem de mansinho…
+o sono chegue… leve… sozinho…
+como brisa que dança no mar,
+te embala, te envolve… te faz flutuar.
+
+A respiração… tão calma e serena,
+desliza no tempo… macia… amena…
+como nuvens que tocam o céu,
+suaves, douradas… num sonho fiel.
+
+E à medida que os olhos se fecham,
+a mente repousa… os medos se afastam…
+um véu de estrelas começa a brilhar,
+trazendo a paz… para te aconchegar.
+
+Então… deixe-se ir… sem pressa, sem medo…
+na onda do sono… num doce segredo…
+pois agora… profundamente… enfim,
+o descanso te abraça… e mora em ti.`} isPlayable={true} />
+            <PoemCard title="Pare de se Preocupar" text={`Enquanto você lê… devagar… sem pressa,
+um alívio suave… dentro de ti começa.
+As nuvens se afastam… o peso se vai,
+e tudo se torna um pouco mais leve… mais paz.
+
+As preocupações… soltas ao vento,
+se desmancham no tempo… como um momento.
+Nada precisa ser tão urgente,
+pois a vida flui… calma… presente.
+
+Então respire… sinta… perceba,
+que a leveza já se enreda
+nos cantos da alma… como brisa no ar,
+trazendo descanso… pra te acalmar.`} isPlayable={true} />
+            <PoemCard title="Sinta-se Confiante Agora" text={`Pode ser interessante… apenas notar,
+como algo em ti… começa a mudar.
+Sem esforço… sem pressa… sem medo,
+um brilho desperta… num doce segredo.
+
+É como uma chama… que dança e aquece,
+crescendo… radiante… intensa e leve.
+Segurança que vem… de dentro pra fora,
+te envolve… te ergue… e brilha agora.
+
+E à medida que sente… essa força surgir,
+percebe que sempre… esteve aí.
+Confiante… presente… inteiro… capaz,
+caminha seguro… sem olhar para trás.`} isPlayable={true} />
+            <PoemCard title="Esqueça os Problemas por um Momento" text={`Talvez… só por um instante,
+tudo fique leve… flutuante…
+e os problemas… tão insistentes,
+se tornem nuvens… indiferentes.
+
+Lá no alto… eles seguem sem rumo,
+desmancham-se… num sopro, num sumo.
+Enquanto aqui… no agora… em ti,
+só há espaço… para se sentir.
+
+Leve… tranquilo… presente no ar,
+como a brisa… a te embalar.
+E nesse momento… sem nada pesar,
+a paz te encontra… sem precisar buscar.`} isPlayable={true} />
+            <PoemCard title="Visualize um Futuro Positivo" text={`À medida que a mente… flui devagar,
+um novo horizonte… começa a brilhar.
+Cores suaves… formas nascendo,
+um futuro bonito… já se estendendo.
+
+Talvez você veja… talvez só sinta,
+mas algo desperta… cresce… infinita.
+Como um sonho… pronto a florescer,
+cheio de luz… pronto a acontecer.
+
+Passo a passo… semeando esperança,
+o amanhã se ergue… dança… avança.
+E, nesse instante… pode perceber,
+o melhor do futuro… já vive em você.`} isPlayable={true} />
+            <div className="bg-indigo-50 p-6 rounded-xl shadow-inner mt-8 text-lg leading-relaxed">
+              <h4 className="font-semibold text-xl text-indigo-700 mb-3">🌊 Maré da Transformação 🌊</h4>
+              <Poem text={`E se agora… enquanto lê essas palavras…
+algo dentro de você começasse a mudar?
+Como a brisa que dança sobre o oceano,
+suave… mas sempre em movimento.
+
+Talvez você perceba… ou talvez apenas sinta…
+que cada respiro traz uma nova possibilidade.
+E, sem precisar forçar, sem precisar entender…
+seu coração já sabe o caminho.
+
+Assim como a maré… que leva o que já não serve,
+e traz o novo… no tempo certo.
+Agora… talvez sem pressa…
+você possa apenas permitir… e fluir.`} isPlayable={true} />
+            </div>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">1️⃣ Linguagem Indireta e Sugestões Implícitas</h4>
+            <PoemCard title="1. Durma profundamente." text={`Talvez agora… sem perceber,
+o corpo relaxe… sem nada querer.
+Um suspiro leve… um ritmo sereno,
+o sono chegando… macio… supremo.
+
+Sem esforço… sem pressa… sem medo,
+apenas se entregue… ao doce enredo.
+Como a noite abraça o mar,
+o descanso vem… pra te embalar.
+
+Os pensamentos… vão se afastando,
+como folhas ao vento… flutuando…
+e, num instante… sem notar,
+você já dorme… a sonhar.`} isPlayable={true} />
+            <PoemCard title="2. Pare de se preocupar." text={`Pode ser interessante… apenas notar,
+como a mente aprende… a se acalmar.
+Pouco a pouco… sem precisar correr,
+as preocupações… começam a ceder.
+
+Como folhas soltas… que o vento carrega,
+os medos se vão… sem deixar entrega.
+Apenas o agora… tranquilo… presente,
+envolve seu ser… suavemente.
+
+Respire… sinta… deixe fluir,
+a paz já existe… dentro de ti.
+E, enquanto tudo se aquieta no ar,
+a calma te abraça… sem precisar chamar.`} isPlayable={true} />
+            <PoemCard title="3. Sinta-se confiante agora." text={`E à medida que o ar… entra e sai,
+algo em você… cresce e se refaz.
+Uma força serena… que se expande,
+como fogo que aquece… e nunca se apaga.
+
+Talvez já sinta… talvez apenas note,
+mas a confiança… brilha… e sobe.
+Segura… firme… presente em ti,
+como um sol que nasce… e não tem fim.
+
+A cada instante… ela se fortalece,
+a dúvida some… a certeza aparece.
+E agora… com passos seguros no chão,
+você avança… guiado pelo coração.`} isPlayable={true} />
+            <PoemCard title="4. Esqueça os Problemas por um Momento." text={`É curioso… como sem esforço algum,
+a mente flutua… suave… comum.
+Como nuvens que seguem… sem rumo, sem pressa,
+deixando o céu… mais claro… sem pressa.
+
+Os problemas… tão distantes agora,
+perdem o peso… se vão… lá fora.
+E nesse instante… só o presente existe,
+leve… tranquilo… tão simples… tão livre.
+
+Respire… sinta… deixe passar,
+como ondas no mar… sem precisar segurar.
+Pois a paz já habita… bem dentro de ti,
+e sempre que quiser… pode voltar aqui.`} isPlayable={true} />
+            <PoemCard title="5. Visualize um futuro positivo." text={`E, enquanto sua mente se abre para sonhar,
+você percebe… um futuro a se desenhar.
+Inspiração flui… como uma luz crescente,
+tornando o amanhã… mais claro… mais presente.
+
+As possibilidades surgem… tão vivas, tão reais,
+como um quadro pintado… em cores especiais.
+Cada passo seu… é mais firme, mais certo,
+e o futuro se forma… de um jeito mais perto.
+
+Com confiança, você vê… tudo acontecer,
+um caminho brilhante… para seguir e crescer.
+E à medida que a imagem ganha vida em ti,
+o futuro inspirador já mora aqui.`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">💡 Exemplo de Respostas:</h4>
+            <PoemCard title="1. Exemplo de Resposta para 'Durma profundamente.'" text={`Pode ser interessante perceber como, pouco a pouco,
+seus olhos ficam mais pesados…
+e o sono chega naturalmente,
+como uma brisa suave… sem pressa, sem rastro.
+
+A cada respiração… mais leve… mais tranquilo,
+o corpo se solta… num ritmo sereno e divino.
+E o mundo ao redor… vai se tornando distante,
+enquanto você se entrega… ao descanso constante.
+
+Com cada batida do coração… mais profundo,
+o sono vem… levando você ao fundo.
+E no silêncio suave… tudo se acalma,
+você está em paz… no abraço da alma.`} isPlayable={true} />
+            <PoemCard title="2. Exemplo de Resposta para 'Pare de se preocupar.'" text={`Talvez você note que algumas preocupações
+já começam a se dissolver,
+quase sem esforço… como névoa ao amanhecer,
+desaparecendo, deixando espaço para a paz.
+
+O peso se esvai… e tudo fica mais leve,
+como se o vento levasse embora o que não serve.
+Cada pensamento que se solta… mais tranquilo,
+deixa um vazio preenchido por um sereno brilho.
+
+E, à medida que tudo se afasta,
+você percebe como a paz se instala…
+suave, silenciosa, preenchendo o espaço,
+até que a mente se acalme, sem nenhum embaraço.`} isPlayable={true} />
+            <PoemCard title="3. Exemplo de Resposta para 'Sinta-se confiante agora.'" text={`À medida que respira fundo,
+pode sentir uma confiança crescendo suavemente
+dentro de você…
+como uma chama que se acende, forte e constante.
+
+A cada inspiração… ela cresce,
+se espalha pelo corpo… e se fortalece.
+E, no exalar… você sente mais firme,
+como raízes profundas… que jamais se calam.
+
+Essa confiança… iluminando o caminho,
+como farol na neblina… suave, mas certeiro.
+Dentro de você… ela é imensa e segura,
+pronta para guiar… cada passo com ternura.`} isPlayable={true} />
+            <PoemCard title="4. Exemplo de Resposta para 'Esqueça os problemas por um momento.'" text={`De alguma forma, sua mente já está encontrando
+um espaço de tranquilidade…
+onde os problemas parecem menores,
+como sombras que se afastam com a luz do dia.
+
+A calma se espalha… serena e vasta,
+e o peso dos pensamentos… aos poucos, se esvai.
+No silêncio interno… tudo se organiza,
+e o que antes parecia pesado… agora se suaviza.
+
+A luz que cresce… dissipa o que incomoda,
+trazendo clareza, levando a escuridão.
+E nesse espaço de paz… você encontra o equilíbrio,
+onde os problemas não têm mais poder… apenas espaço para a solução.`} isPlayable={true} />
+            <PoemCard title="5. Exemplo de Resposta para 'Visualize um futuro positivo.'" text={`E, conforme se permite imaginar possibilidades,
+talvez um cenário positivo já esteja se formando em sua mente…
+pleno de esperança… claro e inspirador,
+como uma jornada nova… pronta para ser vivida.
+
+A cada visão, o caminho se abre,
+cheio de luz, de oportunidades e de calma.
+Cada passo dado na mente… é um passo no futuro,
+um futuro brilhante, cheio de aventura e de cura.
+
+E ao ver esse cenário, tão pleno e vasto,
+você se sente renovado… com o coração mais alto.
+Como um novo começo, que se revela com suavidade,
+pronto para ser vivido, com confiança e liberdade.`} isPlayable={true} />
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">No Fluxo do Agora</h4>
+            <Poem text={`E enquanto lê estas palavras...
+talvez perceba como cada som, cada pausa...
+vai criando um espaço dentro de você...
+
+Um espaço onde o tempo desacelera...
+e tudo que parecia distante se torna acessível...
+como um rio que flui suavemente para o mar...
+
+E pode ser interessante notar...
+como sua respiração se torna mais leve...
+e seu corpo encontra um jeito natural de relaxar...
+
+Porque a mudança acontece...
+não quando se força...
+mas quando se permite fluir...
+
+E quem sabe...
+agora, ou em breve...
+você já esteja sentindo essa transformação...
+crescendo silenciosamente dentro de você...`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">2️⃣ Uso de Metáforas – Criando Imagens Mentais Poderosas</h4>
+            <p className="mb-4 text-lg">📜 Exercício:</p>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li>Escolha um desafio pessoal.</li>
+              <li>Crie uma metáfora para esse desafio.</li>
+              <li>Transforme essa metáfora em uma história de crescimento.</li>
+            </ol>
+            <p className="mt-4 text-lg italic text-gray-600">Exemplo: Desafio: Falta de confiança. Metáfora: "A pequena semente teme crescer, mas quando se abre à luz, ela se transforma em uma árvore forte."</p>
+            <CollapsibleSection title="História de Crescimento Aprofundada (Exemplo)" icon={<ScrollText size={18} />}>
+              <p className="mb-4 text-lg leading-relaxed">
+                No início, a semente repousava em silêncio na terra, sentindo-se segura na escuridão. A segurança da terra fria e úmida a fazia questionar: Será que sou capaz de crescer além disso? O medo de não ser forte o suficiente para enfrentar a vastidão do mundo a paralisava. Ela não sabia o que a luz do sol poderia trazer, mas sentia a pressão do crescimento como algo inevitável.
+              </p>
+              <p className="mb-4 text-lg leading-relaxed">
+                Um dia, a terra começou a ceder levemente, e uma pequena fissura apareceu na casca da semente. A luz do sol, suave e constante, tocou a parte mais sensível dela. Um tremor de receio a percorreu. E se eu me quebrar? pensou a semente. Mas, sem escolha, ela se abriu, expondo-se à imensidão do desconhecido.
+              </p>
+              <p className="mb-4 text-lg leading-relaxed">
+                A princípio, o medo a acompanhou. Cada pequena mudança era uma luta. A semente percebeu que, à medida que se desafiava a sair mais, um novo tipo de força começava a emergir. Suas raízes, que antes estavam aprisionadas no chão, começaram a se esticar, explorando o espaço, em busca de mais nutrientes, mais energia. Elas perceberam que a escuridão que as envolvia não era algo a temer, mas algo a ser superado. Quanto mais profundas suas raízes ficavam, mais sua confiança aumentava.
+              </p>
+              <p className="mb-4 text-lg leading-relaxed">
+                O tronco, inicialmente frágil, começou a se fortalecer. A cada ventania que o fazia balançar, ele aprendeu a se curvar sem quebrar, a ser flexível diante dos desafios. O medo ainda estava lá, mas agora ele não era mais o inimigo, mas algo que fazia parte do processo de crescimento. À medida que os galhos se estendiam, eles se desafiavam a alcançar o céu, a crescer ainda mais, a se expandir para além do que era confortável.
+              </p>
+              <p className="mb-4 text-lg leading-relaxed">
+                E, com o tempo, o que antes parecia um simples broto tornou-se uma árvore imponente. Suas folhas agora ofereciam sombra, e suas raízes, que haviam superado o medo e o desconhecido, se estendiam em busca de ainda mais conexão com a terra. A árvore, agora forte e confiante, sabia que todo o processo de superação havia sido fundamental para alcançar sua grandeza. Ela aprendeu que a confiança não estava em ser imune ao medo, mas em saber que, ao enfrentá-lo, poderia crescer ainda mais.
+              </p>
+              <p className="mb-4 text-lg italic leading-relaxed">Reflexão: Assim como a árvore, você pode se permitir crescer, sabendo que cada passo, por menor que pareça, é uma vitória. Não há necessidade de se preocupar com o tamanho do seu medo, mas de se concentrar no fato de que, ao enfrentá-lo, você encontrará a força para alcançar novos horizontes.</p>
+            </CollapsibleSection>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">3️⃣ Pacing e Leading – Validando e Conduzindo</h4>
+            <h5 className="font-semibold text-lg mb-2">Exemplo de Exercício de Relaxamento</h5>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li><strong className="font-semibold">Estado Atual Comum:</strong> "Você está sentado ou deitado agora, talvez em um lugar confortável, com seus pés apoiados no chão e sua respiração fluindo naturalmente."</li>
+              <li><strong className="font-semibold">Descrição Neutra:</strong> "Enquanto você respira, talvez perceba o movimento suave de sua barriga subindo e descendo, sentindo o peso do seu corpo se entregando ao apoio que o sustenta."</li>
+              <li><strong className="font-semibold">Introdução de Estado Desejado (Relaxamento):</strong> "E talvez, à medida que sua respiração se aprofunda, você comece a perceber uma sensação de leveza, se espalhando por seu corpo, relaxando os músculos, suavemente, a cada expiração... de modo tranquilo e confortável."</li>
+            </ol>
+            <h5 className="font-semibold text-lg mb-2 mt-4">Exemplo de Exercício de Foco e Criatividade</h5>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li><strong className="font-semibold">Estado Atual Comum:</strong> "Enquanto você lê estas palavras, sua mente vai naturalmente processando as ideias que estão sendo apresentadas."</li>
+              <li><strong className="font-semibold">Descrição Neutra:</strong> "Cada frase se encaixa em seu ritmo de leitura, talvez sua atenção se focando agora em uma ideia ou em uma sensação de curiosidade que surge."</li>
+              <li><strong className="font-semibold">Introdução de Estado Desejado (Foco e Criatividade):</strong> "E, enquanto você segue, talvez perceba como novas ideias começam a se formar de maneira clara, inspirando uma sensação de fluidez e criatividade em seu pensamento."</li>
+            </ol>
+            <PoemCard title="Poesia do Foco e Criatividade" text={`Enquanto você lê estas palavras,
+Sua mente começa a absorver, de maneira natural,
+Cada ideia que se apresenta,
+Fazendo-se parte de um todo que começa a se formar.
+
+Cada frase flui suavemente,
+Como um rio que segue seu curso sem pressa,
+E talvez, no ritmo dessa leitura,
+Uma sensação de curiosidade desperte,
+Guiando sua atenção para novos horizontes.
+
+E à medida que você avança,
+Novas ideias começam a surgir,
+Como sementes que germinam em um solo fértil,
+E, com cada pensamento, sua mente se expande,
+Inspirando uma nova onda de criatividade,
+Fluindo com facilidade, como se nunca tivesse parado.`} isPlayable={true} />
+
+            <h5 className="font-semibold text-lg mb-2 mt-4">Exercício de Confiança</h5>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li><strong className="font-semibold">Estado Atual Comum:</strong> "Você já enfrentou muitos momentos desafiadores ao longo da vida, superando situações que pediram de você coragem e determinação."</li>
+              <li><strong className="font-semibold">Descrição Neutra:</strong> "Esses desafios, cada um de sua maneira, ajudaram a moldar a pessoa forte que você é hoje. E, ao olhar para trás, talvez perceba o quanto você cresceu e aprendeu com cada um desses momentos."</li>
+              <li><strong className="font-semibold">Introdução de Estado Desejado (Confiança):</strong> "E agora, ao olhar para o futuro, talvez comece a sentir uma confiança tranquila, sabendo que, com cada passo que você der, está cada vez mais preparado para seguir em frente, sempre mais forte e mais confiante."</li>
+            </ol>
+            <PoemCard title="Poesia da Confiança" text={`Você já enfrentou muitos desafios,
+Momentos que pediram coragem e força,
+E, cada vez que a vida testou sua resistência,
+Você se levantou, com mais determinação.
+
+Esses momentos, com suas dificuldades,
+Moldaram a pessoa forte que você é hoje,
+Cada experiência, cada luta,
+Fez você crescer, aprender e se reinventar.
+
+Agora, ao olhar para o futuro,
+Talvez uma sensação de confiança comece a crescer,
+Tranquila e silenciosa, dentro de você,
+Sabendo que, com cada passo, você se torna mais forte,
+Mais preparado para o que está por vir.
+
+O caminho à frente se abre,
+E você segue, não com medo, mas com fé,
+Com a certeza de que, a cada passo dado,
+Está cada vez mais próximo de alcançar a sua essência.`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">5️⃣ Ambiguidade e Pressuposições – Criando Espaço para o Inconsciente</h4>
+            <p className="mb-4 text-lg">📜 Exercício: Criando Frases com Ambiguidades e Pressuposições Positivas</p>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li>Escreva frases que induzam ao processo de mudança sem que a pessoa perceba conscientemente.</li>
+              <li>Inclua palavras que criem aberturas para o inconsciente interpretar de maneira favorável.</li>
+              <li>Use pressuposições que assumam que algo positivo já está acontecendo.</li>
+            </ol>
+            <p className="mt-4 text-lg italic text-gray-600">Exemplos: "Enquanto você lê isso, sua mente já começa a encontrar novas possibilidades." "Pode ser interessante perceber como, a cada dia, você se torna mais confiante."</p>
+            <h5 className="font-semibold text-lg mb-2 mt-4">Exemplo de Poesia Hipnótica: Sussurros do Inconsciente</h5>
+            <Poem text={`E se cada suspiro trouxesse um segredo?
+E se o silêncio guardasse respostas?
+Agora… enquanto sente o tempo desacelerar…
+algo dentro de você se transforma…
+
+Como folhas ao vento… que dançam sem esforço…
+Como um rio que encontra seu próprio caminho…
+Talvez… agora… você perceba…
+que já está mudando… sem precisar tentar…
+
+A cada batida do coração…
+um novo espaço se abre…
+O velho se dissolve… o novo floresce…
+e tudo simplesmente… acontece… ✨🌿`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🌊 Modelo de Poema Sugestivo: Superação</h4>
+            <PoemCard title="Fluir e Crescer" text={`As marés já mudaram tantas vezes…
+e cada onda soube aonde chegar.
+Algumas se desfizeram na areia,
+outras seguiram sem hesitar.
+
+Assim como a árvore que solta suas folhas,
+você também se renova ao passar.
+Cada passo, cada instante,
+tece um novo despertar.
+
+Sem pressa, sem medo, apenas permita…
+o vento te leva, a vida convida.
+E, sem que perceba, no fundo do ser,
+algo em você já começa a crescer. 🌿✨`} isPlayable={true} />
+            <p className="mt-4 text-lg">✏️ Agora é a sua vez!</p>
+            <p className="text-lg">📌 Desafio:</p>
+            <p className="text-lg mb-4">Escreva um poema usando pelo menos uma metáfora, uma sugestão indireta e um ritmo envolvente.</p>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🔹 Exercício Prático: Criando uma Poesia Terapêutica</h4>
+            <p className="mb-4 text-lg">🎯 Objetivo: Expressar emoções por meio de metáforas e simbolismos, promovendo catarse e autoconhecimento.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Passos:</h5>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li>Identifique uma emoção ou desafio interno.</li>
+              <li>Escolha uma metáfora para representar essa emoção.</li>
+              <li>Escreva um poema curto com foco na transformação.</li>
+            </ol>
+            <PoemCard title="💠 Modelo de Poesia Terapêutica: Ressignificando a Dor - Cicatrizes que Florescem" text={`Houve um tempo em que a dor era sombra,
+um eco distante que insistia em ficar.
+Mas percebi que até as noites mais frias
+trazem consigo o brilho do despertar.
+
+As lágrimas que um dia regaram meu chão
+hoje nutrem raízes de renovação.
+O que antes era perda, agora é semente,
+um novo jardim brota em minha mente.
+
+Cada ferida se torna um traço,
+um mapa de força, um doce abraço.
+E assim descubro, com o tempo a favor,
+que dentro de mim sempre houve amor.`} isPlayable={true} />
+            <p className="mt-4 text-lg">📌 Desafio:</p>
+            <p className="text-lg mb-4">Escreva um poema terapêutico sobre uma emoção que deseja transformar. Use metáforas visuais e símbolos da natureza para criar uma imagem poderosa de cura e crescimento.</p>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🔹 Exercício Prático: Reprogramação Neural com Poesia e Imagens Mentais</h4>
+            <p className="mb-4 text-lg">🎯 Objetivo: Fortalecer novas conexões neurais com repetição de palavras e imagens mentais, promovendo mudanças cognitivas e emocionais positivas.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Passos:</h5>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li>Identifique um padrão de pensamento que deseja mudar.</li>
+              <li>Crie uma imagem mental para substituir essa crença.</li>
+              <li>Transforme essa imagem em uma afirmação repetitiva e positiva.</li>
+              <li>Escreva um poema curto reforçando essa transformação.</li>
+            </ol>
+            <PoemCard title="🌟 Poema de Transformação e Força Interior" text={`Minha mente é como um rio que flui,
+contornando obstáculos, sempre a evoluir.
+Cada curva, uma lição, cada passo, uma conquista,
+a sabedoria cresce, meu caminho se alinha.
+
+A cada dia, mais forte me torno,
+a cada novo passo, mais certo eu me aprumo.
+Minhas raízes são profundas, meu caminho é claro,
+nada me impede de seguir, sigo sempre, sem reparo.
+
+Eu sou mais do que posso ver,
+e minha força cresce, a cada amanhecer.
+A cada dia, eu me fortaleço e encontro novos caminhos.
+Eu sou capaz — com coragem, sigo meus próprios trilhos. 🌿✨`} isPlayable={true} />
+            <PoemCard title="💫 Modelo de Poesia para Reprogramação Neural: Renovação da Mente" text={`Minha mente é um rio sereno e profundo,
+onde cada gota refaz meu mundo.
+Se antes eu temia, agora confio,
+pois dentro de mim há força e brio.
+
+Palavras são sementes que escolho plantar,
+crescem em mim, começam a brotar.
+O que era limite, hoje é passagem,
+rumo a um futuro de luz e coragem.
+
+A cada instante, renasce a certeza,
+sou feito de sonhos, amor e leveza.
+Se ontem duvidei, hoje sei que é real:
+meu poder é imenso, é transformacional.`} isPlayable={true} />
+            <p className="mt-4 text-lg">📌 Desafio:</p>
+            <p className="text-lg mb-4">Escolha uma crença que deseja modificar. Crie uma metáfora visual para representá-la. Escreva um poema curto repetindo essa metáfora de forma positiva. Leia esse poema diariamente por pelo menos 7 dias e observe como se sente.</p>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🔹 Exercício Prático: Construção de um Mindset Resiliente com Poesia</h4>
+            <p className="mb-4 text-lg">🎯 Objetivo: Desenvolver resiliência e emoções positivas através da linguagem poética.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Passos:</h5>
+            <ol className="list-decimal list-inside space-y-2 text-lg">
+              <li>Identifique um desafio que já superou.</li>
+              <li>Reconheça a força e o aprendizado que essa experiência trouxe.</li>
+              <li>Transforme esse aprendizado em uma afirmação fortalecedora.</li>
+              <li>Escreva um poema destacando sua resiliência e crescimento.</li>
+            </ol>
+            <PoemCard title="🔰 Poema de Resiliência e Crescimento" text={`Passei por tempestades, sombras a me cercar,
+em momentos de incerteza, parecia não encontrar o ar.
+Mas, apesar do medo, eu segui em frente,
+sabia que a força estava dentro de mim, latente.
+
+Cada obstáculo, uma lição que ficou,
+cada queda, um motivo pra me levantar e voar.
+Hoje vejo a verdade que o tempo me ensinou:
+cada desafio me tornou mais forte, mais capaz de amar.
+
+Eu sou mais forte do que os ventos que sopram sem parar,
+e em cada passo, vejo meu caminho se abrir, sem hesitar.
+Agora, com coragem e fé, sigo com o coração tranquilo.
+Eu sou resiliente — e meu crescimento é infinito.`} isPlayable={true} />
+            <p className="mt-4 text-lg">📌 Desafio:</p>
+            <p className="text-lg mb-4">Pense em um momento difícil que superou. Escreva um poema curto destacando sua força e crescimento. Leia sua poesia diariamente para reforçar um mindset resiliente.</p>
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Guia Prático: Exercícios e Estruturas de Poesias Hipnóticas" icon={<Book size={20} />}>
+            <p className="text-lg mb-4 leading-relaxed">
+              Vamos aprofundar os modelos de poesia terapêutica, com novas técnicas e aplicações.
+            </p>
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3">1.1 Poesia de Reestruturação Cognitiva (Transformação de Crenças)</h4>
+            <p className="mb-2 text-lg">Objetivo: Alterar padrões de pensamento negativos para positivos.</p>
+            <PoemCard text={`"O espelho refletia dúvidas e medo,
+Mas agora vejo novas cores se formando.
+Os traços antes incertos desenham coragem,
+A imagem que vejo sou eu, livre e forte."`} isPlayable={true} />
+            <h5 className="font-semibold text-lg mb-2 mt-4">✅ Técnicas Adicionais:</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Pacing e Leading (acompanhar a experiência da pessoa e guiá-la para um novo estado emocional).</li>
+              <li>Substituição de metáforas (trocar imagens de medo por segurança e crescimento).</li>
+              <li>Uso de verbos no presente para reforçar a mudança interna.</li>
+            </ul>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">1.2 Poesia de Ancoragem Emocional (Fortalecimento de Estados Positivos)</h4>
+            <p className="mb-2 text-lg">Objetivo: Criar um ponto de apoio emocional para momentos de dificuldade.</p>
+            <PoemCard text={`"Se fechar os olhos agora, pode sentir...
+A brisa leve tocando seu rosto.
+O som das folhas sussurrando coragem.
+E cada vez que inspira, essa força cresce dentro de você.
+Está sempre aqui, sempre sua."`} isPlayable={true} />
+            <h5 className="font-semibold text-lg mb-2 mt-4">✅ Técnicas Adicionais:</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Uso de sensações físicas (brisa, som das folhas) para ativar memórias sensoriais positivas.</li>
+              <li>Sugestões hipnóticas embutidas (“pode sentir...”, “essa força cresce dentro de você”).</li>
+              <li>Repetição de palavras de segurança (“sempre aqui, sempre sua”).</li>
+            </ul>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">1.3 Poesia de Sugestão Hipnótica Suave (Indução de Estados Internos Positivos)</h4>
+            <p className="mb-2 text-lg">Objetivo: Criar um estado leve de transe, facilitando introspecção e transformação.</p>
+            <PoemCard text={`"Talvez você já tenha percebido...
+Que algumas mudanças acontecem sem esforço.
+Como a semente que germina no silêncio da terra,
+Sem precisar saber quando será árvore.
+E assim, dentro de você, algo novo já começa a crescer."`} isPlayable={true} />
+            <h5 className="font-semibold text-lg mb-2 mt-4">✅ Técnicas Adicionais:</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Uso de linguagem permissiva (“Talvez você já tenha percebido...”).</li>
+              <li>Metáfora de crescimento (semente que germina).</li>
+              <li>Sugestão de mudança interna sutil (“algo novo já começa a crescer”).</li>
+            </ul>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">2. Novos Tipos de Poesias Terapêuticas</h4>
+            <h5 className="font-semibold text-lg mb-2">2.1 Poesia de Dissociação Emocional (Separação do Problema)</h5>
+            <p className="mb-2 text-lg">Objetivo: Ajudar a pessoa a se distanciar da dor e ganhar uma nova perspectiva.</p>
+            <PoemCard text={`"Havia uma sombra que me seguia,
+Sussurrava que eu era pequeno demais para seguir em frente.
+Mas então percebi...
+Era apenas minha própria sombra, refletindo o passado.
+E ao me virar para a luz, ela ficou para trás."`} isPlayable={true} />
+            <h5 className="font-semibold text-lg mb-2 mt-4">✅ Técnicas Usadas:</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Dissociação (problema descrito como algo externo, “havia uma sombra”).</li>
+              <li>Reenquadramento (a sombra era um reflexo do passado, não do presente).</li>
+              <li>Mudança de foco (virar-se para a luz).</li>
+            </ul>
+
+            <h5 className="font-semibold text-lg mb-2 mt-8">2.2 Poesia de Integração (Aceitação e Resiliência)</h5>
+            <p className="mb-2 text-lg">Objetivo: Ajudar na aceitação de experiências difíceis, promovendo equilíbrio emocional.</p>
+            <PoemCard text={`"Cada cicatriz na árvore conta uma história.
+Não apaga o vento que soprou, nem a tempestade que passou.
+Mas é exatamente isso que a fortalece.
+E assim, aprendo a me amar, com tudo que sou."`} isPlayable={true} />
+            <h5 className="font-semibold text-lg mb-2 mt-4">✅ Técnicas Usadas:</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Metáfora da resiliência (árvore que cresce apesar das tempestades).</li>
+              <li>Ressignificação da dor (as cicatrizes são símbolos de força).</li>
+              <li>Conclusão empoderadora (“aprendo a me amar, com tudo que sou”).</li>
+            </ul>
+
+            <h5 className="font-semibold text-lg mb-2 mt-8">2.3 Poesia de Futuro Positivo (Visualização de Possibilidades)</h5>
+            <p className="mb-2 text-lg">Objetivo: Criar imagens mentais que direcionam para um futuro mais leve e esperançoso.</p>
+            <PoemCard text={`"Lá na frente, um novo amanhecer espera.
+As cores que ainda não vi já existem.
+A estrada se desenha sob meus pés a cada passo.
+E quando percebo, já estou mais longe do que imaginei."`} isPlayable={true} />
+            <h5 className="font-semibold text-lg mb-2 mt-4">✅ Técnicas Usadas:</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Visualização do futuro (“Lá na frente, um novo amanhecer espera”).</li>
+              <li>Uso de metáforas de movimento (“A estrada se desenha sob meus pés”).</li>
+              <li>Mudança de percepção do tempo (o futuro já está acontecendo).</li>
+            </ul>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">3. Exercícios Avançados de Escrita Terapêutica</h4>
+            <h5 className="font-semibold text-lg mb-2">3.1 Exercício de Transformação de Narrativa</h5>
+            <ul className="list-disc list-inside space-y-2 text-lg">
+              <li>Passo 1: Escreva uma experiência difícil em 3 frases.</li>
+              <li>Passo 2: Reescreva como se estivesse contando sobre outra pessoa.</li>
+              <li>Passo 3: Insira uma metáfora positiva para simbolizar a superação.</li>
+            </ul>
+            <p className="mt-2 text-lg italic text-gray-600">Exemplo: ➡ “Perdi a fé em mim mesmo. Não via saída. Tudo parecia um ciclo sem fim.” ⬇ “Havia um viajante perdido na floresta. Ele achava que nunca encontraria o caminho. Mas então viu uma luz entre as árvores.”</p>
+
+            <h5 className="font-semibold text-lg mb-2 mt-8">3.2 Exercício de Substituição de Palavras</h5>
+            <p className="mb-2 text-lg">Pegue uma frase negativa e substitua palavras-chave por termos positivos ou neutros.</p>
+            <p className="mt-2 text-lg italic text-gray-600">Exemplo: ➡ “Estou preso nessa dor.” ⬇ “Estou aprendendo a entender essa dor.”</p>
+
+            <h5 className="font-semibold text-lg mb-2 mt-8">3.3 Exercício de Escrita Livre com Gatilhos Emocionais</h5>
+            <p className="mb-2 text-lg">Escolha uma das palavras abaixo e escreva um poema curto sobre ela:</p>
+            <ul className="list-disc list-inside text-lg">
+              <li>Liberdade</li>
+              <li>Coragem</li>
+              <li>Transformação</li>
+              <li>Renascimento</li>
+              <li>Equilíbrio</li>
+            </ul>
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Modelo de Sessão Terapêutica" icon={<Sliders size={20} />}>
+            <p className="mb-4 text-lg">Nome do Método: Poesia Cognitiva Hipnótica</p>
+            <p className="mb-4 text-lg">Objetivo: Transformar bloqueios emocionais através da palavra, metáforas e indução hipnótica leve.</p>
+            <p className="mb-4 text-lg">Duração: Aproximadamente 50 minutos.</p>
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3">🔍 Fase 1: Abertura e Conexão (5 Minutos)</h4>
+            <p className="mb-2 text-lg">Objetivo: Criar um ambiente seguro e receptivo para a transformação, permitindo que a pessoa entre em um estado de maior introspecção e abertura emocional.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Variações da Técnica - Imagem da Emoção</h5>
+            <p className="mb-2 text-lg">🎯 Objetivo: Traduzir emoções em metáforas sensoriais para facilitar a compreensão interna e a ressignificação emocional.</p>
+            <p className="mb-2 text-lg font-semibold">1️⃣ Se a emoção fosse uma paisagem, ela poderia ser:</p>
+            <ul className="list-disc list-inside space-y-2 text-lg mb-4">
+              <li>🌵 Um deserto seco e vasto</li>
+              <li>🌳 Uma floresta densa e cheia de vida</li>
+              <li>🌊 Um oceano calmo ou agitado</li>
+            </ul>
+            <p className="mb-4 text-lg italic">💡 E para você? Qual paisagem melhor representa sua emoção neste momento?</p>
+            <p className="mb-2 text-lg font-semibold">2️⃣ Se a emoção fosse um objeto, qual seria?</p>
+            <ul className="list-disc list-inside space-y-2 text-lg mb-4">
+              <li>Uma pedra firme e pesada</li>
+              <li>Uma folha ao vento</li>
+              <li>Uma chama que oscila</li>
+            </ul>
+            <p className="mb-4 text-lg italic">Como você sente que essas metáforas podem se encaixar nas emoções que está explorando?</p>
+            <p className="mb-2 text-lg font-semibold">3️⃣ Se a emoção fosse um som, como soaria?</p>
+            <ul className="list-disc list-inside space-y-2 text-lg mb-4">
+              <li>O rugido do vento</li>
+              <li>A suavidade de uma brisa</li>
+              <li>Uma melodia reconfortante ou notas dispersas</li>
+              <li>O silêncio profundo</li>
+            </ul>
+            <p className="mb-4 text-lg italic">Qual desses sons se conecta mais com o que você sente ao escrever suas poesias ou ao explorar suas emoções?</p>
+            <PoemCard title="📜 Poema de Introdução (Versão Expandida)" text={`Agora, neste instante, respire fundo...
+Deixe o ar entrar, suave, profundo,
+Preencha seus pulmões e permita-se sentir,
+A dança do ar dentro de você, fluindo e se expandindo.
+
+Feche os olhos por um momento e sinta...
+O pulsar do seu coração, o ritmo calmo da vida,
+A presença da emoção que hoje te acompanha,
+Sem pressa, sem medo, sem julgamento.
+
+Ela não te define, não é um peso,
+Apenas passa por você, como as nuvens no céu.
+Observe, sem prender, sem se apegar.
+E enquanto escuta minha voz, imagine...
+
+O espaço interno se abrindo, se expandindo,
+Como uma flor que se desabrocha ao toque da manhã,
+Recebendo a luz suave do novo que se aproxima.
+Não tenha pressa de entender,
+Apenas se entregue ao momento presente,
+Onde tudo é possível, onde tudo pode se transformar,
+E o novo, como um sopro fresco, começa a nascer dentro de você.`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🎭 Fase 2: Exploração do Tema (10 Minutos)</h4>
+            <p className="mb-2 text-lg">Objetivo: Identificar e expressar emoções internas por meio de metáforas e reflexões, facilitando a ressignificação e o entendimento do que está sendo vivenciado.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Variação - Técnica do Diálogo Interno</h5>
+            <p className="mb-2 text-lg">A ideia central desta técnica é dar voz à emoção, tornando-a mais tangível e compreensível. Em vez de apenas sentir, o participante interage com sua emoção como se fosse um personagem com intenções, mensagens e necessidades próprias.</p>
+            <p className="mb-2 text-lg font-semibold">1️⃣ Se essa emoção fosse um personagem, como ela se comportaria?</p>
+            <p className="mb-2 text-lg font-semibold">2️⃣ Se pudesse perguntar algo a essa emoção, o que seria?</p>
+            <p className="mb-2 text-lg font-semibold">3️⃣ Como essa emoção responderia?</p>
+            <PoemCard title="📜 Poema Terapêutico para Reflexão (Versão Expandida)" text={`"Havia um eco dentro de mim,
+Uma voz que eu achava ser minha.
+Mas então percebi…
+Eu sou quem escuta, não quem grita.
+Eu sou quem acolhe, não quem foge.
+E no silêncio entre os sons...
+Começo a me reconhecer."`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🔄 Fase 3: Transformação e Sugestão Positiva (15 Minutos)</h4>
+            <p className="mb-2 text-lg">Objetivo: Substituir padrões limitantes por novas narrativas internas fortalecedoras, permitindo que a pessoa ressignifique experiências passadas e construa um caminho mais leve e consciente.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Variação - Técnica da Reestruturação Cognitiva</h5>
+            <p className="mb-2 text-lg">Esta técnica ajuda a reformular percepções sobre experiências passadas, criando novas interpretações mais saudáveis e empoderadoras.</p>
+            <p className="mb-2 text-lg font-semibold">1️⃣ Escrevendo um Final Alternativo</p>
+            <p className="mb-2 text-lg font-semibold">2️⃣ Criando um Mantra Pessoal</p>
+            <PoemCard title="📜 Poema de Transformação (Versão Expandida)" text={`"O medo dizia que eu não poderia seguir,
+Mas percebi…
+O medo não tem pernas.
+Ele apenas fala, mas sou eu quem decide caminhar.
+Cada passo que dou é uma escolha.
+E a cada escolha, um novo caminho se desenha.
+O medo pode olhar, mas nunca guiar."`} isPlayable={true} />
+
+            <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">🔗 Fase 4: Ancoragem e Fechamento (10 Minutos)</h4>
+            <p className="mb-2 text-lg">Objetivo: Criar um símbolo interno para fixar o aprendizado e reforçar o novo estado emocional, garantindo que a transformação gerada ao longo da sessão seja mantida e acessível no dia a dia.</p>
+            <h5 className="font-semibold text-lg mb-2">📌 Variação - Técnica do Ponto de Ancoragem</h5>
+            <p className="mb-2 text-lg font-semibold">1️⃣ Palavra-chave como Âncora</p>
+            <p className="mb-2 text-lg font-semibold">2️⃣ Âncora Musical</p>
+            <PoemCard title="📜 Poema Final de Ancoragem (Versão Expandida)" text={`"Feche os olhos e veja...
+Uma chama acendendo dentro de você.
+Ela brilha suave, mas firme.
+A cada respiração, ela cresce, aquece, fortalece.
+E quando abrir os olhos, essa luz continuará ali.
+Não porque foi dada a você...
+Mas porque sempre esteve dentro de você."`} isPlayable={true} />
+          </CollapsibleSection>
+        </Section>
+
+        {/* Manifesto da Poesia Cognitiva Hipnótica */}
+        <Section id="manifesto" title="Manifesto da Poesia Cognitiva Hipnótica" icon={<Layers size={30} />}>
+          <h3 className="text-2xl font-semibold text-indigo-600 mb-4">Título: Palavras que Libertam: O Poder da Poesia na Transformação Interior</h3>
+          <h4 className="text-xl font-semibold text-indigo-600 mb-3">Introdução: O Poder Transformador da Palavra</h4>
+          <p className="text-lg mb-4 leading-relaxed">
+            Desde os primórdios da humanidade, a palavra tem sido a ponte entre o mundo interno e externo. Ela nomeia, dá forma e sentido às experiências. No campo terapêutico, a linguagem não é apenas um meio de comunicação, mas uma ferramenta poderosa para reestruturação cognitiva e emocional.
+            A Poesia Cognitiva Hipnótica nasce dessa compreensão. Quando a palavra ganha intenção, ritmo e metáfora, sua força se multiplica. Ela se torna mais do que um veículo de expressão; transforma-se em uma chave capaz de abrir portas para a cura e o autoconhecimento.
+          </p>
+
+          <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">1. O que é a Poesia Cognitiva Hipnótica?</h4>
+          <p className="text-lg mb-4 leading-relaxed">
+            A Poesia Cognitiva Hipnótica (PCH) é um método terapêutico inovador que combina hipnose conversacional, Terapia Cognitivo-Comportamental (TCC) e poesia terapêutica para facilitar mudanças profundas na mente e nas emoções.
+          </p>
+          <h5 className="font-semibold text-lg mb-2">Elementos Fundamentais da PCH:</h5>
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>✅ Hipnose Conversacional</li>
+            <li>✅ Terapia Cognitivo-Comportamental (TCC)</li>
+            <li>✅ Poesia Terapêutica</li>
+          </ul>
+          <h5 className="font-semibold text-lg mb-2 mt-4">Por que esse método é tão eficaz?</h5>
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>📌 Acesso ao inconsciente</li>
+            <li>📌 Engajamento emocional</li>
+            <li>📌 Transformação interna</li>
+          </ul>
+
+          <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">3. Para Quem é Esse Método?</h4>
+          <h5 className="font-semibold text-lg mb-2">1️⃣ Para Quem Busca Cura Emocional e Autoconhecimento</h5>
+          <p className="text-lg mb-4 leading-relaxed">
+            Muitas pessoas sentem que estão presas em padrões emocionais negativos, sem conseguir verbalizar suas dores. A PCH oferece um caminho acessível para explorar e ressignificar sentimentos.
+          </p>
+          <h5 className="font-semibold text-lg mb-2 mt-4">2️⃣ Para Terapeutas e Profissionais da Saúde Mental</h5>
+          <p className="text-lg mb-4 leading-relaxed">
+            A PCH é uma ferramenta complementar para psicólogos, psicanalistas, terapeutas, coaches e outros profissionais que trabalham com o desenvolvimento humano.
+          </p>
+          <h5 className="font-semibold text-lg mb-2 mt-4">3️⃣ Para Qualquer Pessoa que Sente que as Palavras São Mais do que Frases</h5>
+          <p className="text-lg mb-4 leading-relaxed">
+            Se você já sentiu o impacto emocional de uma música, de um poema ou até de uma frase dita no momento certo, então sabe que as palavras podem mudar nossa percepção da vida.
+          </p>
+
+          <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">4. O Poder da Palavra</h4>
+          <p className="text-lg mb-4 leading-relaxed">
+            A palavra tem um impacto profundo na construção da nossa realidade interna. O que pensamos, dizemos e ouvimos influencia diretamente nossas emoções, comportamentos e até nossa identidade.
+          </p>
+          <h5 className="font-semibold text-lg mb-2">A Palavra Como Chave para a Transformação</h5>
+          <p className="text-lg mb-4 leading-relaxed">As palavras podem nos libertar ou nos aprisionar. Na PCH, utilizamos a linguagem poética para abrir caminhos internos, dissolver bloqueios e criar novas perspectivas.</p>
+          <h5 className="font-semibold text-lg mb-2 mt-4">Metáforas e Emoção: A Linguagem do Inconsciente</h5>
+          <p className="text-lg mb-4 leading-relaxed">A mente racional compreende explicações lógicas, mas o inconsciente responde melhor a metáforas e imagens.</p>
+          <h5 className="font-semibold text-lg mb-2 mt-4">Escolhendo Palavras que Curam</h5>
+          <p className="text-lg mb-4 leading-relaxed">Podemos direcionar nosso vocabulário para a cura, escolhendo palavras que evocam segurança, crescimento e transformação.</p>
+
+          <h4 className="text-xl font-semibold text-indigo-600 mb-3 mt-8">5. Convite para a Jornada</h4>
+          <p className="text-lg mb-4 leading-relaxed">
+            A Poesia Cognitiva Hipnótica (PCH) não é apenas um método, mas um caminho de transformação. Cada palavra escrita, falada ou sentida pode ser uma chave para abrir novas possibilidades internas.
+          </p>
+          <h5 className="font-semibold text-lg mb-2">Por Que Se Juntar a Nós?</h5>
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>🔹 Autoconhecimento Profundo</li>
+            <li>🔹 Ferramenta Terapêutica Inovadora</li>
+            <li>🔹 Expressão e Cura</li>
+          </ul>
+          <h5 className="font-semibold text-lg mb-2 mt-4">O Que Vem Por Aí?</h5>
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>📖 Livro em Desenvolvimento</li>
+            <li>🎓 Curso Exclusivo</li>
+            <li>🖥️ Workshop Presencial e Online</li>
+          </ul>
+          <h5 className="font-semibold text-lg mb-2 mt-4">Como Participar?</h5>
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>📩 Para mais informações sobre os próximos passos, entre em contato.</li>
+            <li>💡 Inscreva-se para receber novidades e materiais exclusivos.</li>
+            <li>🌱 A mudança começa com uma palavra. Escolha a sua e venha com a gente!</li>
+          </ul>
+        </Section>
+
+        {/* Conclusão e Próximos Passos */}
+        <Section id="conclusao" title="Conclusão e Próximos Passos" icon={<Lightbulb size={30} />}>
+          <p className="text-lg mb-4 leading-relaxed">
+            Chegamos a um ponto crucial no desenvolvimento da Poesia Cognitiva Hipnótica (PCH). Agora temos uma base sólida com:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-lg mb-6">
+            <li>✅ Um modelo de sessão terapêutica pronto para ser aplicado.</li>
+            <li>✅ Exercícios práticos que podem ser incorporados em um livro ou curso.</li>
+            <li>✅ Um manifesto que apresenta e divulga o método de forma clara e inspiradora.</li>
+          </ul>
+          <h3 className="text-2xl font-semibold text-indigo-600 mb-4">O Que Podemos Fazer Agora?</h3>
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>🔹 Criar Materiais Visuais para o Curso</li>
+            <li>🔹 Estruturar um Workshop (Presencial ou Online)</li>
+            <li>🔹 Desenvolver um e-book (já proposto na discussão anterior!)</li>
+          </ul>
+          <h3 className="text-2xl font-semibold text-indigo-600 mb-4 mt-8">Próximo Passo: Planejamento Estratégico</h3>
+          <p className="text-lg mb-4 leading-relaxed">
+            📌 Qual dessas frentes você deseja priorizar? Podemos definir um cronograma para cada uma delas e começar a dar vida a esse projeto de forma estruturada e eficiente.
+          </p>
+          <p className="text-2xl font-bold text-center text-indigo-700 mt-8">
+            🚀 A Poesia Cognitiva Hipnótica está pronta para impactar vidas. Agora é o momento de expandir e compartilhar essa transformação!
+          </p>
+        </Section>
+      </main>
+
+      <footer className="bg-indigo-700 text-white p-6 text-center rounded-t-xl mt-12">
+        <p className="text-lg">&copy; {new Date().getFullYear()} Poesia Hipnótica. Todos os direitos reservados.</p>
+        <p className="text-sm mt-2">Feito com 💜 e o poder das palavras.</p>
+      </footer>
+    </div>
+  );
+};
+
+// Componente para seções gerais do site
+const Section = ({ id, title, children, icon }) => (
+  <section id={id} className="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-12 border border-indigo-100 animate-fade-in">
+    <h2 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-6 flex items-center space-x-4">
+      {icon && <span className="text-indigo-600">{icon}</span>}
+      <span>{title}</span>
+    </h2>
+    {children}
+  </section>
+);
+
+// Componente para poemas
+const Poem = ({ text, isPlayable = false }) => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  // Simula a reprodução de áudio lendo o texto em voz alta
+  const speakText = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'pt-BR'; // Define o idioma para Português (Brasil)
+      utterance.onend = () => setIsPlaying(false);
+      utterance.onstart = () => setIsPlaying(true);
+      utterance.onerror = (event) => {
+        console.error('Erro na síntese de fala:', event.error);
+        setIsPlaying(false);
+      };
+
+      if (isPlaying) {
+        window.speechSynthesis.cancel(); // Para a reprodução atual
+        setIsPlaying(false);
+      } else {
+        window.speechSynthesis.speak(utterance);
+      }
+    } else {
+      console.warn('Síntese de fala não é suportada neste navegador.');
+      // Mensagem para o usuário, se necessário (substituir alert)
+    }
+  };
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted;
+    }
+    setIsMuted(!isMuted);
+  };
+
+  return (
+    <div className="relative bg-gray-50 p-4 rounded-lg italic text-gray-700 shadow-inner overflow-auto">
+      <pre className="whitespace-pre-wrap font-serif text-lg leading-relaxed">
+        {text}
+      </pre>
+      {isPlayable && (
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={speakText}
+            className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 transition-colors duration-200"
+            title={isPlaying ? "Pausar Leitura" : "Ouvir Poema"}
+          >
+            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+            <span>{isPlaying ? 'Pausar' : 'Ouvir'}</span>
+          </button>
+          {/* O botão de mudo seria mais relevante para áudio real, mantendo para fins de demonstração do conceito */}
+          {/* <button
+            onClick={toggleMute}
+            className="ml-2 p-2 bg-gray-300 text-gray-700 rounded-full hover:bg-gray-400 transition-colors duration-200"
+            title={isMuted ? "Desativar Mudo" : "Ativar Mudo"}
+          >
+            {isMuted ? <SpeakerSimpleMute size={20} /> : <SpeakerSimpleHigh size={20} />}
+          </button> */}
+        </div>
+      )}
+      {/* Um elemento de áudio real seria aqui para uma implementação completa, por exemplo: */}
+      {/* <audio ref={audioRef} src="/caminho/do/seu/audio.mp3" preload="auto" /> */}
+    </div>
+  );
+};
+
+// Componente para cards de poemas com título
+const PoemCard = ({ title, text, isPlayable = false }) => (
+  <div className="bg-white border border-indigo-200 p-5 rounded-xl shadow-md mt-6">
+    {title && <h5 className="font-semibold text-xl text-indigo-700 mb-3">{title}</h5>}
+    <Poem text={text} isPlayable={isPlayable} />
+  </div>
+);
+
+// Componente Collapsible (expansível/retrátil)
+const CollapsibleSection = ({ title, children, icon }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border border-indigo-200 rounded-xl mb-4 shadow-sm bg-white">
+      <button
+        className="w-full flex justify-between items-center p-5 font-semibold text-xl text-left text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors duration-200 focus:outline-none"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="flex items-center space-x-3">
+          {icon}
+          <span>{title}</span>
+        </span>
+        {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+      </button>
+      {isOpen && (
+        <div className="p-5 border-t border-indigo-100 animate-fade-in-up">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// As definições de fallback para os ícones não são mais necessárias aqui, pois a importação direta deve funcionar.
+// Elas foram removidas para evitar possíveis conflitos ou redundâncias.
+
+export default App;
